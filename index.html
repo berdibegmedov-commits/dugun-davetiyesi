@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eziz & Davetiye | Düğünümüze Davetlisiniz</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f7f4ef; color: #2c2522; }
+        .serif-font { font-family: 'Playfair Display', serif; }
+        .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #aa771c 100%); }
+        .gold-text { background: linear-gradient(135deg, #c5a059 0%, #8c6228 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .seal-shadow { box-shadow: 0 10px 25px -5px rgba(165, 124, 56, 0.4); }
+        .door-left, .door-right { transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1); }
+        .open .door-left { transform: translateX(-100%); }
+        .open .door-right { transform: translateX(100%); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-0 md:p-6 selection:bg-[#d4af37] selection:text-white">
+
+    <!-- Ana Konteyner -->
+    <div id="appContainer" class="w-full max-w-md bg-[#FAF8F5] min-h-screen md:min-h-[850px] md:rounded-3xl shadow-2xl relative overflow-hidden flex flex-col border border-[#EBE5DC]">
+
+        <!-- GİRİŞ KAPISI VE 3D MÜHÜR (Zarflı Karşılama) -->
+        <div id="welcomeDoor" class="absolute inset-0 z-50 flex flex-col bg-[#2A2421] transition-opacity duration-700">
+            <!-- Sol Kapak -->
+            <div class="door-left absolute inset-y-0 left-0 w-1/2 bg-[#F3ECE1] border-r border-[#D9C9B0] z-10 flex flex-col justify-between p-6 shadow-2xl">
+                <div class="border border-[#D9C9B0]/40 p-4 h-full flex flex-col justify-between">
+                    <span class="serif-font text-xs tracking-widest text-[#8C7A6B]">DÜVETNAME</span>
+                    <span class="serif-font text-xs tracking-widest text-[#8C7A6B] rotate-180">2026</span>
+                </div>
+            </div>
+            <!-- Sağ Kapak -->
+            <div class="door-right absolute inset-y-0 right-0 w-1/2 bg-[#F3ECE1] border-l border-[#D9C9B0] z-10 flex flex-col justify-between p-6 shadow-2xl">
+                <div class="border border-[#D9C9B0]/40 p-4 h-full flex flex-col justify-between items-end">
+                    <span class="serif-font text-xs tracking-widest text-[#8C7A6B] rotate-180">2026</span>
+                    <span class="serif-font text-xs tracking-widest text-[#8C7A6B]">ÖZEL DAVET</span>
+                </div>
+            </div>
+
+            <!-- Mühür ve Açma Butonu -->
+            <div class="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 text-center bg-black/20">
+                <div class="space-y-3 mb-8 animate-pulse">
+                    <p class="serif-font text-xs tracking-[0.3em] text-[#E5D5BC] uppercase">Sizi Bu Mutlu Güne Bekliyoruz</p>
+                    <h1 class="serif-font text-4xl text-white font-light tracking-wide">Eziz & Leyla</h1>
+                </div>
+
+                <button onclick="openInvitation()" class="group relative flex flex-col items-center focus:outline-none">
+                    <div class="w-20 h-20 rounded-full gold-gradient flex items-center justify-center text-white text-2xl font-bold seal-shadow transform group-hover:scale-105 transition duration-300 border-2 border-[#FFE8A3]">
+                        ✨
+                    </div>
+                    <span class="mt-4 serif-font text-xs tracking-[0.25em] text-[#E5D5BC] uppercase bg-black/40 px-4 py-1.5 rounded-full border border-white/10 backdrop-blur-sm">Davetiyeyi Aç</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ÜST BAR & KONTROLLER -->
+        <header class="p-4 flex items-center justify-between border-b border-[#EBE5DC] bg-white/60 backdrop-blur-md sticky top-0 z-30">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-[#d4af37]"></span>
+                <span class="serif-font text-sm font-medium tracking-wider">E & L 2026</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <button onclick="toggleEditMode()" id="editBtn" class="text-xs bg-[#2A2421] text-white px-3 py-1.5 rounded-full transition hover:bg-[#4A3F3A]">Düzenle</button>
+                <button onclick="shareLink()" class="text-xs gold-gradient text-white px-3 py-1.5 rounded-full font-medium shadow-sm">Paylaş</button>
+            </div>
+        </header>
+
+        <!-- ANA İÇERİK AKIŞI -->
+        <main class="flex-1 overflow-y-auto pb-12">
+            
+            <!-- Hero / Karşılama Alanı -->
+            <section class="px-6 py-12 text-center space-y-6">
+                <div class="w-36 h-48 mx-auto rounded-t-full rounded-b-2xl overflow-hidden border-4 border-white shadow-xl relative bg-[#EBE5DC]">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="Çift" class="w-full h-full object-cover">
+                </div>
+
+                <div class="space-y-2">
+                    <p class="serif-font italic text-sm text-[#8C7A6B]">Bu mutlu günümüzde sizleri de aramızda görmekten onur duyarız</p>
+                    <h2 class="serif-font text-3xl font-normal tracking-wide text-[#2A2421]" contenteditable="true" data-field="coupleNames">Eziz & Leyla</h2>
+                </div>
+
+                <div class="flex justify-center items-center space-x-4 pt-2">
+                    <div class="h-[1px] w-12 bg-[#d4af37]/50"></div>
+                    <span class="serif-font text-xs tracking-widest text-[#d4af37] uppercase">14 Haziran 2026</span>
+                    <div class="h-[1px] w-12 bg-[#d4af37]/50"></div>
+                </div>
+            </section>
+
+            <!-- Geri Sayım Sayacı -->
+            <section class="px-6 py-4">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-[#EBE5DC] text-center space-y-4">
+                    <h3 class="serif-font text-xs uppercase tracking-[0.2em] text-[#8C7A6B]">Düğüne Kalan Zaman</h3>
+                    <div class="grid grid-cols-4 gap-2 text-center">
+                        <div class="bg-[#FAF8F5] p-3 rounded-xl border border-[#EBE5DC]">
+                            <span id="days" class="serif-font text-xl font-bold block text-[#2A2421]">00</span>
+                            <span class="text-[10px] text-[#8C7A6B] uppercase">Gün</span>
+                        </div>
+                        <div class="bg-[#FAF8F5] p-3 rounded-xl border border-[#EBE5DC]">
+                            <span id="hours" class="serif-font text-xl font-bold block text-[#2A2421]">00</span>
+                            <span class="text-[10px] text-[#8C7A6B] uppercase">Saat</span>
+                        </div>
+                        <div class="bg-[#FAF8F5] p-3 rounded-xl border border-[#EBE5DC]">
+                            <span id="minutes" class="serif-font text-xl font-bold block text-[#2A2421]">00</span>
+                            <span class="text-[10px] text-[#8C7A6B] uppercase">Dakika</span>
+                        </div>
+                        <div class="bg-[#FAF8F5] p-3 rounded-xl border border-[#EBE5DC]">
+                            <span id="seconds" class="serif-font text-xl font-bold block text-[#2A2421]">00</span>
+                            <span class="text-[10px] text-[#8C7A6B] uppercase">Saniye</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Yer ve Zaman Detayları -->
+            <section class="px-6 py-6 space-y-4">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-[#EBE5DC] space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-10 h-10 rounded-full bg-[#FAF8F5] border border-[#EBE5DC] flex items-center justify-center text-lg flex-shrink-0">📅</div>
+                        <div>
+                            <h4 class="serif-font font-medium text-sm text-[#2A2421]">Tarih & Saat</h4>
+                            <p class="text-xs text-[#6B5B52] mt-1" contenteditable="true" data-field="weddingDate">14 Haziran 2026, Pazar | Saat: 19:30</p>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-[#EBE5DC] pt-4 flex items-start space-x-4">
+                        <div class="w-10 h-10 rounded-full bg-[#FAF8F5] border border-[#EBE5DC] flex items-center justify-center text-lg flex-shrink-0">📍</div>
+                        <div class="flex-1">
+                            <h4 class="serif-font font-medium text-sm text-[#2A2421]">Mekan</h4>
+                            <p class="text-xs text-[#6B5B52] mt-1" contenteditable="true" data-field="weddingVenue">Hilton Istanbul Bosphorus Balo Salonu, Harbiye / Istanbul</p>
+                            <a href="https://maps.google.com" target="_blank" class="inline-block mt-3 text-xs font-medium text-[#8c6228] underline underline-offset-4">Haritada Görüntüle →</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LCV (Katılım Bildirimi) Formu -->
+            <section class="px-6 py-4">
+                <div class="bg-[#2A2421] text-white rounded-2xl p-6 shadow-lg space-y-4">
+                    <div class="text-center space-y-1">
+                        <h3 class="serif-font text-lg font-light text-[#E5D5BC]">Katılım Durumu (LCV)</h3>
+                        <p class="text-xs text-[#A89F95]">Lütfen 1 Haziran'a kadar katılımınızı bildirin.</p>
+                    </div>
+
+                    <form onsubmit="handleRSVP(event)" class="space-y-3 pt-2">
+                        <div>
+                            <input type="text" id="guestName" placeholder="Adınız Soyadınız" required class="w-full px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-xs text-white placeholder-white/50 focus:outline-none focus:border-[#d4af37]">
+                        </div>
+                        <div>
+                            <select id="guestCount" class="w-full px-4 py-2.5 rounded-xl bg-[#3A322E] border border-white/20 text-xs text-white focus:outline-none focus:border-[#d4af37]">
+                                <option value="1 Kişi">1 Kişi Katılacağım</option>
+                                <option value="2 Kişi">2 Kişi Katılacağız</option>
+                                <option value="Katılamıyorum">Üzgünüm, katılamıyorum</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full py-3 rounded-xl gold-gradient text-xs font-medium uppercase tracking-wider text-white shadow-md transition hover:opacity-95">Katılım Bildir</button>
+                    </form>
+                    <div id="rsvpSuccess" class="hidden text-center text-xs text-[#d4af37] pt-2">Teşekkürler! Katılımınız kaydedildi.</div>
+                </div>
+            </section>
+
+            <!-- Kapanış Notu -->
+            <section class="px-6 py-8 text-center space-y-3">
+                <p class="serif-font text-xs italic text-[#8C7A6B]">"Hayatımızın en güzel gününde sizlerle birlikte olmak dileğiyle..."</p>
+                <h3 class="serif-font text-xl text-[#2A2421]">Eziz & Leyla</h3>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Davetiyeyi Açma Fonksiyonu
+        function openInvitation() {
+            const door = document.getElementById('welcomeDoor');
+            door.classList.add('open');
+            setTimeout(() => {
+                door.style.display = 'none';
+            }, 1200);
+        }
+
+        // Geri Sayım Sayacı
+        const weddingDate = new Date('June 14, 2026 19:30:00').getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            if (distance > 0) {
+                document.getElementById('days').innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+                document.getElementById('hours').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('minutes').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('seconds').innerText = Math.floor((distance % (1000 * 60)) / 1000);
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Düzenleme Modu Aç/Kapat
+        let isEditing = false;
+        function toggleEditMode() {
+            isEditing = !isEditing;
+            const editBtn = document.getElementById('editBtn');
+            const editableElements = document.querySelectorAll('[contenteditable]');
+            
+            editableElements.forEach(el => {
+                el.contentEditable = isEditing;
+                if(isEditing) {
+                    el.classList.add('border-b', 'border-dashed', 'border-[#d4af37]', 'bg-amber-50/50');
+                } else {
+                    el.classList.remove('border-b', 'border-dashed', 'border-[#d4af37]', 'bg-amber-50/50');
+                }
+            });
+
+            if(isEditing) {
+                editBtn.innerText = "Kaydet";
+                editBtn.classList.remove('bg-[#2A2421]');
+                editBtn.classList.add('bg-emerald-700');
+            } else {
+                editBtn.innerText = "Düzenle";
+                editBtn.classList.remove('bg-emerald-700');
+                editBtn.classList.add('bg-[#2A2421]');
+                alert('Değişiklikleriniz bu oturum için güncellendi!');
+            }
+        }
+
+        // RSVP Form Gönderimi
+        function handleRSVP(e) {
+            e.preventDefault();
+            document.getElementById('rsvpSuccess').classList.remove('hidden');
+            e.target.reset();
+        }
+
+        // Paylaşma
+        function shareLink() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Eziz & Leyla Düğün Davetiyesi',
+                    text: 'Düğün törenimizde sizi de aramızda görmekten mutluluk duyarız!',
+                    url: window.location.href,
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('Davetiye bağlantısı panoya kopyalandı!');
+            }
+        }
+    </script>
+</body>
+</html>
